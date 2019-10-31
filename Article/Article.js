@@ -85,6 +85,22 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'This is the added article in the array',
+    date: 'Jan 2st, 2019',
+    firstParagraph: `Hodor hodor HODOR! Hodor hodor - hodor, hodor. Hodor hodor... Hodor hodor hodor; hodor hodor. Hodor hodor hodor, hodor, hodor
+          hodor. Hodor, hodor. Hodor. Hodor, hodor - hodor... Hodor hodor hodor; hodor HODOR hodor, hodor hodor?! Hodor hodor, hodor.
+          Hodor hodor hodor hodor hodor! Hodor hodor - HODOR hodor, hodor hodor hodor hodor hodor; hodor hodor? `,
+
+    secondParagraph: `Hodor, hodor. Hodor. Hodor, hodor, hodor. Hodor hodor, hodor. Hodor hodor, hodor, hodor hodor. Hodor! Hodor hodor, hodor;
+          hodor hodor hodor? Hodor, hodor. Hodor. Hodor, hodor - HODOR hodor, hodor hodor hodor! Hodor, hodor. Hodor. Hodor, HODOR
+          hodor, hodor hodor, hodor, hodor hodor. Hodor hodor - hodor - hodor... Hodor hodor hodor hodor hodor hodor hodor?! Hodor
+          hodor - hodor hodor hodor. Hodor. Hodor hodor... Hodor hodor hodor hodor hodor? `,
+
+    thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
+          Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
+          Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
   }
 ];
 
@@ -103,6 +119,7 @@ const data = [
 
   Your function should take either an object as it's one argument, or 5 separate arguments mapping to each piece of the data object above.
 
+
   Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
 
   Step 3: return the entire component.
@@ -112,3 +129,63 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
+const container = document.querySelector('.articles');
+
+data.forEach(post => {
+  container.appendChild(createArticle(post.title, post.date, post.firstParagraph, post.secondParagraph, post.thirdParagraph))
+})
+
+function createArticle(title, date, firstParagraph, secondParagraph, thirdParagraph) {
+  const openDiv = document.createElement('div');
+  const Title = document.createElement('h2')
+  const daTe = document.createElement('p')
+  const paragraphOne = document.createElement('p')
+  const paragraphTwo = document.createElement('p')
+  const paragraphThree = document.createElement('p')
+  const expandBtn = document.createElement('span')
+  const closeBtn = document.createElement('span');
+
+  // set structure
+  openDiv.appendChild(Title);
+  openDiv.appendChild(daTe);
+  openDiv.appendChild(paragraphOne);
+  openDiv.appendChild(paragraphTwo);
+  openDiv.appendChild(paragraphThree);
+  openDiv.appendChild(expandBtn);
+  openDiv.appendChild(closeBtn)
+
+  // set classes
+  openDiv.classList.add('article');
+  daTe.classList.add('date');
+  expandBtn.classList.add('expandButton');
+  closeBtn.classList.add('close')
+
+  // set text content
+  Title.textContent = title;
+  daTe.textContent = date;
+  paragraphOne.textContent = firstParagraph;
+  paragraphTwo.textContent = secondParagraph;
+  paragraphThree.textContent = thirdParagraph;
+
+  // Style close button
+  closeBtn.textContent = 'close';
+  closeBtn.style.background = '#4FFF8F';
+  closeBtn.style.cursor = 'pointer';
+
+  expandBtn.textContent = '\u25bc' + ' Click to Expand'; // open
+
+  // Add event listener
+  expandBtn.addEventListener('click', event => {
+    //console.log('button clicked', event.target)
+    openDiv.classList.toggle('article-open')
+    expandBtn.textContent = '\u25b2' + ' Click to Close'; // close
+  })
+
+  // Add event listener
+  closeBtn.addEventListener('click', event => {
+    // set display to none for the selected article
+    openDiv.style.display = 'none';
+  })
+
+  return openDiv
+}
