@@ -142,7 +142,8 @@ function createArticle(title, date, firstParagraph, secondParagraph, thirdParagr
   const paragraphOne = document.createElement('p')
   const paragraphTwo = document.createElement('p')
   const paragraphThree = document.createElement('p')
-  const buttonClass = document.createElement('span')
+  const expandBtn = document.createElement('span')
+  const closeBtn = document.createElement('span');
 
   // set structure
   openDiv.appendChild(Title);
@@ -150,12 +151,14 @@ function createArticle(title, date, firstParagraph, secondParagraph, thirdParagr
   openDiv.appendChild(paragraphOne);
   openDiv.appendChild(paragraphTwo);
   openDiv.appendChild(paragraphThree);
-  openDiv.appendChild(buttonClass);
+  openDiv.appendChild(expandBtn);
+  openDiv.appendChild(closeBtn)
 
   // set classes
   openDiv.classList.add('article');
   daTe.classList.add('date');
-  buttonClass.classList.add('expandButton');
+  expandBtn.classList.add('expandButton');
+  closeBtn.classList.add('close')
 
   // set text content
   Title.textContent = title;
@@ -164,17 +167,25 @@ function createArticle(title, date, firstParagraph, secondParagraph, thirdParagr
   paragraphTwo.textContent = secondParagraph;
   paragraphThree.textContent = thirdParagraph;
 
-  const open = '\u25bc';
-  const close = '\u25b2';
-  buttonClass.textContent = open;
+  // Style close button
+  closeBtn.textContent = 'close';
+  closeBtn.style.background = '#4FFF8F';
+  closeBtn.style.cursor = 'pointer';
+
+  expandBtn.textContent = '\u25bc' + ' Click to Expand'; // open
 
   // Add event listener
-  buttonClass.addEventListener('click', event => {
-    console.log('button clicked', event.target)
+  expandBtn.addEventListener('click', event => {
+    //console.log('button clicked', event.target)
     openDiv.classList.toggle('article-open')
-    buttonClass.textContent = close;
+    expandBtn.textContent = '\u25b2' + ' Click to Close'; // close
   })
 
+  // Add event listener
+  closeBtn.addEventListener('click', event => {
+    // set display to none for the selected article
+    openDiv.style.display = 'none';
+  })
 
   return openDiv
 }
